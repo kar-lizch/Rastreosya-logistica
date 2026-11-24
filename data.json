@@ -1,0 +1,35 @@
+[
+  {
+    "id": "REG-101",
+    "modulo": "Inventario SKU",
+    "codigo": "SKU-104",
+    "descripcion": "Cajas corrugadas reforzadas · Almacén Central",
+    "cantidad": 45,
+    "minimo": 20,
+    "tarifa": 8.5,
+    "totalEstimado": 382.5,
+    "estado": "Disponible"
+  },
+  {
+    "id": "REG-102",
+    "modulo": "Guía / Envío",
+    "codigo": "GUIA-882",
+    "descripcion": "Despacho paquetería comercial · Ruta Valencia",
+    "cantidad": 12,
+    "minimo": 15,
+    "tarifa": 24.0,
+    "totalEstimado": 288.0,
+    "estado": "Reorden / Atención"
+  },
+  {
+    "id": "REG-103",
+    "modulo": "Ruta / Flota",
+    "codigo": "RUTA-07",
+    "descripcion": "Unidad Furgón N° 07 · Tramo Caracas - Valencia",
+    "cantidad": 4,
+    "minimo": 6,
+    "tarifa": 110.0,
+    "totalEstimado": 440.0,
+    "estado": "Crítico"
+  }
+]
