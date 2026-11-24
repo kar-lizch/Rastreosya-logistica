@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RastreosYa Logística | Control de Inventarios y Operaciones</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-content">
+      <div>
+        <span class="badge">UNITEC · Bases de la Programación e Innovación</span>
+        <h1>RastreosYa Logística</h1>
+        <p class="subtitle">Control de inventarios SKU, guías de envío y asignación de rutas/flota</p>
+      </div>
+      <nav class="nav-links" aria-label="Navegación principal">
+        <a href="#metricas">Métricas</a>
+        <a href="#registro">Registro y Cálculo</a>
+        <a href="#registros">Registros</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section id="metricas" class="metrics-section" aria-label="Resumen operativo">
+      <h2>Resumen de Actividad Operativa</h2>
+      <div class="metrics-grid">
+        <article class="metric-card">
+          <span>Registros Totales</span>
+          <strong id="kpi-total-registros">0</strong>
+        </article>
+        <article class="metric-card">
+          <span>Unidades / Stock Total</span>
+          <strong id="kpi-total-unidades">0</strong>
+        </article>
+        <article class="metric-card">
+          <span>Alertas de Stock / Reorden</span>
+          <strong id="kpi-alertas-stock">0</strong>
+        </article>
+        <article class="metric-card">
+          <span>Tarifa / Valor Estimado</span>
+          <strong id="kpi-valor-estimado">$0.00</strong>
+        </article>
+      </div>
+    </section>
+
+    <section id="registro" class="form-section" aria-label="Formulario de registro y cálculo">
+      <h2>Registro y Cálculo Operativo</h2>
+      <form id="operacion-form" novalidate>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="modulo">Módulo Operativo</label>
+            <select id="modulo" name="modulo">
+              <option value="Inventario SKU">Inventario SKU</option>
+              <option value="Guía / Envío">Guía / Envío</option>
+              <option value="Ruta / Flota">Ruta / Flota</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="codigo">Código / SKU / Guía</label>
+            <input type="text" id="codigo" name="codigo" placeholder="Ej. SKU-104 o GUIA-882" required />
+          </div>
+
+          <div class="form-group">
+            <label for="descripcion">Descripción / Destino / Unidad</label>
+            <input type="text" id="descripcion" name="descripcion" placeholder="Ej. Cajas de empaque · Ruta Valencia" required />
+          </div>
+
+          <div class="form-group">
+            <label for="cantidad">Cantidad / Unidades / Bultos</label>
+            <input type="number" id="cantidad" name="cantidad" step="1" min="1" placeholder="Ej. 25" required />
+          </div>
+
+          <div class="form-group">
+            <label for="minimo">Stock Mínimo / Reorden (o Factor)</label>
+            <input type="number" id="minimo" name="minimo" step="1" min="0" placeholder="Ej. 15" required />
+          </div>
+
+          <div class="form-group">
+            <label for="tarifa">Tarifa / Costo Unitario ($)</label>
+            <input type="number" id="tarifa" name="tarifa" step="0.01" min="0.01" placeholder="Ej. 12.50" required />
+          </div>
+        </div>
+
+        <div class="preview-box" aria-live="polite">
+          <div>
+            <span>Estado / Clasificación:</span>
+            <strong id="preview-estado">Pendiente de cálculo</strong>
+          </div>
+          <div>
+            <span>Total Estimado:</span>
+            <strong id="preview-total">$0.00</strong>
+          </div>
+        </div>
+
+        <div id="form-feedback" class="feedback" role="alert" aria-live="assertive"></div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn-primary">Calcular y Registrar</button>
+          <button type="button" id="btn-limpiar" class="btn-secondary">Limpiar</button>
+        </div>
+      </form>
+    </section>
+
+    <section id="registros" class="table-section" aria-label="Registros almacenados">
+      <div class="table-header">
+        <h2>Registros Logísticos Guardados</h2>
+        <div class="table-controls">
+          <input type="search" id="buscar-registro" placeholder="Buscar por código o descripción..." aria-label="Buscar registro" />
+          <select id="filtro-modulo" aria-label="Filtrar por módulo">
+            <option value="TODOS">Todos los módulos</option>
+            <option value="Inventario SKU">Inventario SKU</option>
+            <option value="Guía / Envío">Guía / Envío</option>
+            <option value="Ruta / Flota">Ruta / Flota</option>
+          </select>
+          <button type="button" id="btn-exportar" class="btn-secondary">Exportar Resumen (.txt)</button>
+          <button type="button" id="btn-reset-demo" class="btn-danger">Restaurar Base JSON</button>
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Módulo</th>
+              <th>Código</th>
+              <th>Descripción</th>
+              <th>Cantidad</th>
+              <th>Mínimo</th>
+              <th>Total Est.</th>
+              <th>Estado</th>
+              <th>Acción</th>
+            </tr>
+          </thead>
+          <tbody id="tabla-registros-body"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>RastreosYa Logística · Persistencia en navegador (JSON + localStorage) · Sin frameworks externos</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
